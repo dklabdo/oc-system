@@ -3,6 +3,17 @@ import SideBar from "@/Component/SideBar";
 import Nav from "@/Component/Nav";
 import Etudiant from "@/ui/Etudiant";
 import { Plus } from "lucide-react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import EtudiantPopUp from "@/Component/EtudiantPopUp";
 
 function EtudiantPage() {
   return (
@@ -13,18 +24,23 @@ function EtudiantPage() {
           <Nav />
         </div>
         <div className="px-2 relative flex overflow-hidden flex-col w-full max-h-full  h-full  ">
-          <div className="pr-3 w-full flex justify-between ">
+          <div className="pr-3 pb-3 items-center  w-full flex justify-between ">
             <h1 className="px-2 text-2xl pb-3 font-semibold text-black ">
               {" "}
               Etudiant{" "}
             </h1>
-            <button
-              title="Ajouter un enseignant"
-              className="px-2   gap-2 text-sm justify-center items-center flex h-8 rounded-md bg-gray-400 text-white hover:bg-main "
-            >
-              {" "}
-              <Plus size={18} /> Ajouter
-            </button>
+            <Dialog>
+              <DialogTrigger >
+                <button
+                  title="Ajouter un enseignant"
+                  className="px-2 cursor-pointer  gap-2 text-sm justify-center items-center flex h-8 rounded-md bg-gray-300 text-white hover:bg-main "
+                >
+                  {" "}
+                  <Plus size={18} /> Ajouter
+                </button>{" "}
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[700px]"> <EtudiantPopUp/> </DialogContent>
+            </Dialog>
           </div>
           <div className="max-h-full h-full  px-[6px] overflow-auto w-full   ">
             <Etudiant />

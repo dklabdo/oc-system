@@ -6,8 +6,9 @@ import { Plus } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import EtudiantPopUp from "@/Component/EtudiantPopUp";
 import EnseignantPopUp from "@/Component/EnseignantPopUp";
+import Departement from "@/Component/Departement";
 
-function EnseignantPage() {
+function DeptPage() {
   return (
     <div className="bg-gray-50 overflow-y-hidden flex w-full h-dvh p-4 ">
       <SideBar />
@@ -19,9 +20,9 @@ function EnseignantPage() {
           <div className="pr-3 pb-3 items-center w-full flex justify-between ">
             <h1 className="px-2 text-2xl  font-semibold text-black ">
               {" "}
-              Enseignant{" "}
+              Departement{" "}
             </h1>
-            
+
             <Dialog>
               <DialogTrigger>
                 <button
@@ -40,7 +41,7 @@ function EnseignantPage() {
           </div>
 
           <div className="max-h-full h-full  px-[6px] overflow-auto w-full   ">
-            <Enseignant />
+            <Departement />
           </div>
         </div>
       </div>
@@ -48,4 +49,4 @@ function EnseignantPage() {
   );
 }
 
-export default EnseignantPage;
+export default DeptPage;

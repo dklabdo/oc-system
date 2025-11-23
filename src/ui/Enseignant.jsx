@@ -15,11 +15,13 @@ import profile from "../assets/profile.svg";
 import React from "react";
 import { PenIcon } from "lucide-react";
 import { PenLine } from "lucide-react";
+import 'animate.css';
+
 
 function Enseignant() {
   return (
-    <div className=" w-full flex items-center gap-3 h-full min-h-full bg-gray-50 ">
-      <div className=" w-[72%] h-full p-4 bg-white rounded-xl shadow-2xl shadow-gray-100/50  ">
+    <div className="overflow-hidden w-full flex items-center gap-3 h-full min-h-full bg-gray-50 ">
+      <div className="animate__animated animate__bounceIn w-[72%] h-full p-4 bg-white rounded-xl shadow-2xl shadow-gray-100/50  ">
         <div className=" w-full flex px-2 justify-between ">
           <div className=" flex items-center gap-2 ">
             <Menubar className="  bg-white ">
@@ -77,7 +79,7 @@ function Enseignant() {
           </button>
         </div>
       </div>
-      <div className=" w-[28%] flex flex-col items-center gap-5 h-full bg-white rounded-xl shadow-2xl shadow-gray-100/50  ">
+      <div className="animate__animated animate__bounceIn w-[28%] flex flex-col items-center gap-5 h-full bg-white rounded-xl shadow-2xl shadow-gray-100/50  ">
         <div className="items-center px-2 pb-2 pt-8 flex flex-col w-full  ">
           <img className=" w-14 " src={profile} alt="..." />
           <p className="w-full text-center text-lg text-gray-600 font-semibold mt-3  ">
@@ -287,7 +289,7 @@ function EnseignantAction() {
 
 function EnseignantModule() {
   return (
-    <div className="flex scale-95 w-full flex-col px-3 ">
+    <div className=" flex scale-95 w-full flex-col px-3 ">
       <div className=" w-full flex justify-between ">
         <p> Module assigné </p>
         <PenLine size={16} />

@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import EtudiantPopUp from "@/Component/EtudiantPopUp";
 import EnseignantPopUp from "@/Component/EnseignantPopUp";
 
-function EnseignantPage() {
+function EnProfile() {
   return (
     <div className="bg-gray-50 overflow-y-hidden flex w-full h-dvh p-4 ">
       <SideBar />
@@ -21,22 +21,8 @@ function EnseignantPage() {
               {" "}
               Enseignant{" "}
             </h1>
-            
-            <Dialog>
-              <DialogTrigger>
-                <button
-                  title="Ajouter un enseignant"
-                  className="px-2   gap-2 text-sm justify-center items-center flex h-8 rounded-md bg-gray-300 cursor-pointer text-white hover:bg-main "
-                >
-                  {" "}
-                  <Plus size={18} /> Ajouter
-                </button>{" "}
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[450px]">
-                {" "}
-                <EnseignantPopUp />{" "}
-              </DialogContent>
-            </Dialog>
+
+          
           </div>
 
           <div className="max-h-full h-full  px-[6px] overflow-auto w-full   ">
@@ -48,4 +34,4 @@ function EnseignantPage() {
   );
 }
 
-export default EnseignantPage;
+export default EnProfile;

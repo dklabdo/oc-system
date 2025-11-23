@@ -7,6 +7,9 @@ import { User2 } from "lucide-react";
 import { LibraryBig } from "lucide-react";
 import { X } from "lucide-react";
 import { Plus } from "lucide-react";
+import "animate.css";
+import SectionPopUp from "@/Component/SesctionPopUp";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 function Section() {
   const [section, setsection] = useState([]);
@@ -27,8 +30,8 @@ function Section() {
 
   return (
     <div className=" w-full h-full overflow-hidden items-center flex flex-col gap-4 min-h-full bg-gray-50 ">
-      <div className="text-gray-700 shadow-2xl shadow-gray-100/50 flex items-center px-3 h-16 min-h-16  w-full rounded-xl bg-white ">
-        <span className="mr-[6px] "> Home </span>
+      <div className="text-gray-700 animate__animated animate__bounceIn shadow-2xl shadow-gray-100/50 flex items-center px-3 h-16 min-h-16  w-full rounded-xl bg-white ">
+        <span className="mr-[6px] "> Informatique </span>
         {section.map((sec, index) => {
           return (
             <span className="mr-[6px]" key={index}>
@@ -38,16 +41,14 @@ function Section() {
           );
         })}
       </div>
-      <div className=" h-full overflow-y-hidden max-h-full   w-full  flex gap-4 ">
-        <div className=" h-full px-2 w-[25%] shadow-2xl shadow-gray-100/50 bg-white rounded-xl ">
+      <div className=" h-full  overflow-hidden max-h-full   w-full  flex gap-4 ">
+        <div className=" h-full animate__animated animate__bounceIn px-2 w-[25%] shadow-2xl shadow-gray-100/50 bg-white rounded-xl ">
           {section.length === 0 && <SelectSystem fnc={handleSelection} />}
+
           {section.length === 1 && (
-            <SelectSpecialite prev={removeLast} fnc={handleSelection} />
-          )}
-          {section.length === 2 && (
             <SelectNiveau prev={removeLast} fnc={handleSelection} />
           )}
-          {section.length > 2 && (
+          {section.length > 1 && (
             <SelectSection
               currentSection={currentSection}
               setcurrentSection={setcurrentSection}
@@ -57,11 +58,11 @@ function Section() {
             />
           )}
         </div>
-        <div className=" h-full w-[75%] shadow-2xl shadow-gray-100/50 bg-white rounded-xl ">
+        <div className=" h-full animate__animated animate__bounceIn w-[75%] shadow-2xl shadow-gray-100/50 bg-white rounded-xl ">
           {section.length === 0 && <Temp />}
           {section.length === 1 && <Temp />}
           {section.length === 2 && <Temp />}
-          {section.length > 2 && <SectionDetails />}
+          {section.length > 1 && <SectionDetails />}
         </div>
       </div>
     </div>
@@ -200,7 +201,7 @@ function SelectNiveau({ prev, fnc }) {
   );
 }
 
-function SelectSection({ currentSection, setcurrentSection,fnc2 , prev, fnc }) {
+function SelectSection({ currentSection, setcurrentSection, fnc2, prev, fnc }) {
   const sp = [
     "Section 1",
     "Section 2",
@@ -252,11 +253,19 @@ function SelectSection({ currentSection, setcurrentSection,fnc2 , prev, fnc }) {
           </div>
         ))}
       </div>
-      <div className=" px-3 ">
-        <button className="cursor-pointer  w-full py-2 rounded-md flex justify-center items-center bg-black text-white transition-all hover:bg-main hover:text-white  ">
-          {" "}
-          <PlusCircle size={22} />{" "}
-        </button>
+      <div className="w-full px-3 ">
+        <Dialog>
+          <DialogTrigger className="w-full" >
+            <button className="cursor-pointer  w-full py-2 rounded-md flex justify-center items-center bg-black text-white transition-all hover:bg-main hover:text-white  ">
+              {" "}
+              <PlusCircle size={22} />{" "}
+            </button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[450px]">
+            {" "}
+            <SectionPopUp />{" "}
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

@@ -7,6 +7,8 @@ import "react-circular-progressbar/dist/styles.css";
 import img from "../assets/example.png";
 import { Plus } from "lucide-react";
 import { Bell } from "lucide-react";
+import 'animate.css';
+
 
 function Dashboard() {
   return (
@@ -35,7 +37,7 @@ function Dashboard() {
 
 function FileStat() {
   return (
-    <div className=" w-full h-full  flex gap-4 items-center  ">
+    <div className="animate__animated animate__bounceIn w-full h-full  flex gap-4 items-center  ">
       <div className="w-[25%] pl-4  h-full  rounded-md justify-center bg-white px-2 flex flex-col gap-3  ">
         <div className=" w-full flex items-center gap-2 ">
           <div className=" w-9 h-9 flex justify-center items-center rounded-md bg-blue-300/50 ">
@@ -78,7 +80,7 @@ function FileStat() {
 
 function PeapoleStat() {
   return (
-    <div className=" w-full h-full p-4 flex gap-4  ">
+    <div className="animate__animated animate__bounceIn w-full h-full p-4 flex gap-4  ">
       <div className="bg-[#F8E38D] h-full  w-1/3 justify-center rounded-xl items-center flex flex-col gap-2 ">
         <p className=" text-sm text-gray-700 "> Student </p>
         <h3 className=" text-black font-bold   "> 40000 </h3>
@@ -97,7 +99,7 @@ function PeapoleStat() {
 
 function DocumentComp() {
   return (
-    <div className="h-full flex flex-col gap-3  ">
+    <div className="animate__animated animate__bounceIn h-full flex flex-col gap-3  ">
       <h2 className="text-lg pl-3 pb-1 font-semibold text-black ">
         {" "}
         Nouveaux documents{" "}
@@ -337,7 +339,7 @@ function GenderStat() {
   const femalePercentage = 35; // example: 35% female
 
   return (
-    <div className="flex flex-col  w-full h-full   ">
+    <div className=" animate__animated animate__bounceIn flex flex-col  w-full h-full   ">
       <h2 className="text-lg pl-3 pb-1 font-semibold text-black ">
         {" "}
         Students gender statestics{" "}
@@ -386,7 +388,7 @@ function GenderStat() {
 
 function Anonce() {
   return (
-    <div className=" w-full flex flex-col h-full  gap-3 items-center    ">
+    <div className="animate__animated animate__bounceIn w-full flex flex-col h-full  gap-3 items-center    ">
       <h2 className="text-lg w-full text-start pl-1 py-1 font-semibold text-black ">
         {" "}
         Students gender statestics{" "}
@@ -476,7 +478,7 @@ function Anonce() {
 
 function Report() {
   return (
-    <div className=" w-full  h-full flex flex-col ">
+    <div className="animate__animated animate__bounceIn w-full  h-full flex flex-col ">
       <h2 className="text-lg  pl-3 font-semibold text-black ">
         {" "}
         Repoerts{" "}

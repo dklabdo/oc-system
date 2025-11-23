@@ -15,11 +15,12 @@ import profile from "../assets/module.svg";
 import React from "react";
 import { PenIcon } from "lucide-react";
 import { PenLine } from "lucide-react";
+import 'animate.css';
 
 function Module() {
   return (
-    <div className=" w-full flex items-center gap-5 h-full min-h-full bg-gray-50 ">
-      <div className=" w-full h-full p-4 bg-white rounded-xl shadow-2xl shadow-gray-100/50  ">
+    <div className="overflow-hidden w-full flex items-center gap-5 h-full min-h-full bg-gray-50 ">
+      <div className="animate__animated animate__bounceIn w-full h-full p-4 bg-white rounded-xl shadow-2xl shadow-gray-100/50  ">
         <div className=" w-full flex px-2 justify-between ">
           <div className=" flex items-center gap-2 ">
             <Menubar className="  bg-white ">
