@@ -1,19 +1,19 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "order",
+  "productName": "ocestral erp",
   "version": "0.1.0",
-  "identifier": "qrorderdz.com",
-  
+  "identifier": "ocestral.com",
+
   "build": {
-    "beforeDevCommand": "pnpm dev",
+    "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "pnpm build",
+    "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist"
   },
   "app": {
     "windows": [
       {
-        "title": "order",
+        "title": "ocestral erp",
         "width": 1200,
         "minWidth": 1200,
         "height": 600

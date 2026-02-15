@@ -1,7 +1,7 @@
 [package]
-name = "order"
+name = "oc"
 version = "0.1.0"
-description = "A Tauri App"
+description = "A software that help you manage your business"
 authors = ["you"]
 edition = "2021"
 
