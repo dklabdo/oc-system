@@ -5,6 +5,29 @@ import { CircleUser, Facebook, Instagram, Linkedin } from "lucide-react";
 import logoClient from "../assets/Gemini_Generated_Image_hu68muhu68muhu68-removebg-preview.png";
 import AdminAuth from "@/Component/AdminAuth";
 import { Phone, Mail, ChevronRight, Server, Zap } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { invoke } from "@tauri-apps/api/core";
+import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
+import { openUrl } from "@tauri-apps/plugin-opener";
+
+const openERPWindow = () => {
+  const erpWindow = new WebviewWindow("ERP", {
+    url: "https://erp.benhadou.ocestral.com",
+    title: "ERP",
+    width: 1400,
+    height: 900,
+    resizable: true,
+    fullscreen: false,
+  });
+
+  erpWindow.once("tauri://created", () => {
+    console.log("ERP window created successfully");
+  });
+
+  erpWindow.once("tauri://error", (e) => {
+    console.error("Failed to create ERP window", e);
+  });
+};
 
 function Auth() {
   function ConnectToServer() {
@@ -28,8 +51,9 @@ function Auth() {
               "
           />
           <h2 className="text-center text-lg px-3 font-semibold text-white ">
-We Deliver smart & scalable digital solutions that empower businesses to grow in a connected, modern world.          </h2>
-          
+            We Deliver smart & scalable digital solutions that empower
+            businesses to grow in a connected, modern world.{" "}
+          </h2>
         </div>
       </div>
     </div>
@@ -37,16 +61,52 @@ We Deliver smart & scalable digital solutions that empower businesses to grow in
 }
 
 function ServerConnection() {
-  const [isConnecting, setIsConnecting] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
+  const navigate = useNavigate();
+  const [server, setServer] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState("Disconnected");
 
-  const handleConnect = async () => {
-    setIsConnecting(true);
-    // Simulate connection
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setIsConnected(true);
-    setIsConnecting(false);
-    location.replace("https://benhadou.erp.ocestral.com/", "_blank");
+  const closeERPWindow = async () => {
+    const erpWindow = await WebviewWindow.getByLabel("erp-window");
+
+    if (erpWindow) {
+      await erpWindow.close();
+    }
+    setServer(false);
+    setStatus("Disconnected");
+  };
+
+  const checkConnection = async () => {
+    console.log("test");
+
+    setStatus("Checking server...");
+    console.log(status);
+
+    try {
+      const result = await invoke("ping_server", {
+        server: "erp.benhadou.ocestral.com",
+      });
+      console.log(result);
+
+      if (result === "connected") {
+        openERPWindow();
+        setStatus("Connected to server");
+        setServer(true);
+      } else if (result === "vpn_missing") {
+        setStatus("VPN app not installed. Redirecting to download...");
+        await openUrl("https://www.fortinet.com/support/product-downloads");
+      } else if (result === "vpn_needed") {
+        setStatus("Launching VPN app...");
+        await invoke("launch_vpn");
+        setStatus("Please connect in VPN app, then retry server check");
+      }
+    } catch (err) {
+      console.log(err);
+
+      setStatus("Error checking server");
+      setServer(false);
+    }
   };
 
   return (
@@ -91,15 +151,21 @@ function ServerConnection() {
             <div className="mb-6 p-6 bg-gradient-to-br bg-gray-50 rounded-2xl border border-slate-200">
               <h4 className="text-lg font-semibold text-slate-900 mb-3 flex items-center space-x-2">
                 <Zap className="w-5 h-5 text-blue-800" />
-                <span>À propos du logiciel</span>
+                <span>About our software</span>
               </h4>
               <p className="text-slate-500 text-justify leading-relaxed">
-                Our ERP platform provides a comprehensive and intuitive solution for centralized business management. Designed to adapt to various industries, it enables you to monitor operations in real time, coordinate teams, optimize resources, and automate core business and administrative processes. With a modern interface and powerful tools, you gain complete visibility and full control over your organization—anytime, anywhere.
+                Our ERP platform provides a comprehensive and intuitive solution
+                for centralized business management. Designed to adapt to
+                various industries, it enables you to monitor operations in real
+                time, coordinate teams, optimize resources, and automate core
+                business and administrative processes. With a modern interface
+                and powerful tools, you gain complete visibility and full
+                control over your organization—anytime, anywhere.
               </p>
             </div>
 
             {/* Connection Status */}
-            {isConnected && (
+            {status === "Connected to server" && (
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl animate-fade-in">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
@@ -128,48 +194,150 @@ function ServerConnection() {
                 </div>
               </div>
             )}
+            {status === "Launching VPN app..." && (
+              <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-xl animate-fade-in">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center">
+                    <svg
+                      className="w-5 h-5 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-amber-900">
+                      Connected Successfully
+                    </p>
+                    <p className="text-sm text-amber-700">
+                      You're now connected to the server
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {status === "VPN app not installed. Redirecting to download..." && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-300 rounded-xl animate-fade-in">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 text-white bg-red-500 rounded-full flex items-center justify-center">
+                    X
+                  </div>
+                  <div>
+                    <p className="font-semibold text-red-900">Erreur</p>
+                    <p className="text-sm text-red-700">{status}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {status ===
+              "Please connect in VPN app, then retry server check" && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl animate-fade-in">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                    <svg
+                      className="w-5 h-5 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-red-900">Erreur</p>
+                    <p className="text-sm text-red-700">{status}</p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Connect Button */}
-            <button
-              onClick={handleConnect}
-              disabled={isConnecting || isConnected}
-              className={`w-full py-4 px-6 rounded-xl font-semibold text-white text-lg transition-all duration-300 flex items-center justify-center space-x-3 group ${
-                isConnected
-                  ? "bg-green-500 cursor-default"
-                  : isConnecting
-                    ? "bg-blue-400 cursor-wait"
-                    : "bg-gradient-to-r from-blue-500 to-indigo-600  shadow-lg shadow-blue-500/30   transform "
-              }`}
-            >
-              {isConnecting ? (
-                <>
-                  <div className="w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Connecting...</span>
-                </>
-              ) : isConnected ? (
-                <>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span>Connected</span>
-                </>
-              ) : (
-                <>
-                  <span>Connect to the server</span>
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </>
-              )}
+            {!server && (
+              <button
+                onClick={() => checkConnection()}
+                disabled={
+                  server ||
+                  status === "Checking server..." ||
+                  status === "Launching VPN app..."
+                }
+                className={`w-full py-4 px-6 rounded-xl font-semibold text-white text-lg transition-all duration-300 flex items-center justify-center space-x-3 group ${
+                  server
+                    ? "bg-green-500 cursor-default"
+                    : status === "Error checking server"
+                      ? "bg-red-500 cursor-not-allowed"
+                      : status === "Checking server..." ||
+                          status === "Launching VPN app..."
+                        ? "bg-blue-400 cursor-wait"
+                        : "bg-gradient-to-r from-blue-500 to-indigo-600  shadow-lg shadow-blue-500/30   transform "
+                }`}
+              >
+                {status == "Checking server..." && (
+                  <>
+                    <div className="w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Connecting...</span>
+                  </>
+                )}
+                {status === "Error checking server" && (
+                  <>
+                    <span>Error please retry</span>
+                  </>
+                )}
+                {status ===
+                  "VPN app not installed. Redirecting to download..." && (
+                  <>
+                    <span>Download vpn , try again </span>
+                  </>
+                )}
+                {status ===
+                  "Please connect in VPN app, then retry server check" && (
+                  <>
+                    <span>Connect to vpn , try again</span>
+                  </>
+                )}
+
+                {status === "connected" && (
+                  <>
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    <span>Connected</span>
+                  </>
+                )}
+                {status === "Disconnected" && (
+                  <>
+                    <span>Connect to the server</span>
+                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
+              </button>
+            )}
+            {server && <button onClick={() => closeERPWindow()} className="w-full  py-3 px-6 rounded-xl font-semibold text-white text-lg bg-red-500 hover:bg-red-600 transition-colors">
+              Disconnect to server
             </button>
+              }
           </div>
         </div>
 

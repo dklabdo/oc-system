@@ -1,0 +1,11 @@
+{
+  "identifier": "main-capability",
+  "description": "Main app permissions",
+  "windows": ["main", "ERP"],
+  "permissions": [
+    "core:default",
+    "core:window:allow-close",
+    "core:webview:allow-create-webview-window",
+    "opener:allow-open-url"
+  ]
+}

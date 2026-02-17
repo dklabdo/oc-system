@@ -2,7 +2,12 @@
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "ocestral erp",
   "version": "0.1.0",
-  "identifier": "ocestral.com",
+  "identifier": "benhadou.erp",
+  "plugins": {
+    "shell": {
+      "open": true
+    }
+  },
 
   "build": {
     "beforeDevCommand": "npm run dev",
@@ -16,11 +21,14 @@
         "title": "ocestral erp",
         "width": 1200,
         "minWidth": 1200,
-        "height": 600
+        "height": 1000,
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
       }
     ],
     "security": {
-      "csp": null
+      "csp": null,
+      "capabilities": ["main-capability"]
+
     }
   },
   "bundle": {

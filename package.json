@@ -1,5 +1,5 @@
 {
-  "name": "order",
+  "name": "ocestral",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -17,8 +17,9 @@
     "@supabase/supabase-js": "^2.93.3",
     "@tailwindcss/vite": "^4.0.0",
     "@tanstack/react-query": "^5.90.5",
-    "@tauri-apps/api": "^2",
-    "@tauri-apps/plugin-opener": "^2",
+    "@tauri-apps/api": "^2.10.1",
+    "@tauri-apps/plugin-opener": "^2.5.3",
+    "@tauri-apps/plugin-shell": "^2.3.5",
     "animate.css": "^4.1.1",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",

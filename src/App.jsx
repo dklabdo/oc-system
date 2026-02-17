@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import Auth from "./Pages/Auth";
+import ERP from "./Pages/ERP";
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Auth />} />
+          <Route path="/app" element={<ERP />} />
          
         </Routes>
       </BrowserRouter>
