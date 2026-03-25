@@ -26,12 +26,17 @@
       }
     ],
     "security": {
-      "csp": null,
-      "capabilities": ["main-capability"]
+      "csp": "default-src 'self'; connect-src 'self' https://erp.benhadou.ocestral.com; frame-src https://erp.benhadou.ocestral.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline';",
 
+      "capabilities": ["main-capability"]
     }
   },
   "bundle": {
+    "macOS": {
+      "frameworks": [],
+      "minimumSystemVersion": "10.13",
+      "exceptionDomain": "erp.benhadou.ocestral.com"
+    },
     "active": true,
     "targets": "all",
     "icon": [
