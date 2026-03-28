@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useEmployee } from "../context/EmployeeContext";
 import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
+import { openUrl } from "@tauri-apps/plugin-opener";
 
 // Icon map: tries to match app names to icons
 const APP_ICON_MAP = {
@@ -89,24 +90,41 @@ const ACCENT_COLORS = [
 ];
 
 
-const openERPWindow = (link , name) => {
-  const erpWindow = new WebviewWindow(name, {
-    url: link,
-    title: name,
-    width: 1400,
-    height: 900,
-    resizable: true,
-    fullscreen: false,
-  });
+const openERPWindow = async (link, name) => {
+  try {
+    // Sanitize the label to a valid Tauri window label (alphanumeric + underscores)
+    const label = name.replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 32) || "app";
 
-  erpWindow.once("tauri://created", () => {
-    
-    console.log("ERP window created successfully");
-  });
+    const erpWindow = new WebviewWindow(label, {
+      url: link,
+      title: name,
+      width: 1400,
+      height: 900,
+      resizable: true,
+      fullscreen: false,
+    });
 
-  erpWindow.once("tauri://error", (e) => {
-    console.error("Failed to create ERP window", e);
-  });
+    erpWindow.once("tauri://created", () => {
+      console.log("App window created successfully");
+    });
+
+    erpWindow.once("tauri://error", async (e) => {
+      console.error("Failed to create app window, opening in browser:", e);
+      // Fallback: open in the system's default browser
+      try {
+        await openUrl(link);
+      } catch (err) {
+        console.error("Failed to open URL:", err);
+      }
+    });
+  } catch (err) {
+    console.error("WebviewWindow error, falling back to browser:", err);
+    try {
+      await openUrl(link);
+    } catch (e) {
+      console.error("Failed to open URL:", e);
+    }
+  }
 };
 
 function AppCard({ app, index }) {
@@ -139,7 +157,7 @@ function AppCard({ app, index }) {
 }
 
 export default function WorkspacePanel() {
-  const { employee, apps, logoutEmployee } = useEmployee();
+  const { employee, apps, logoutEmployee , setShowCreateMeetingModal  } = useEmployee();
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 
@@ -190,9 +208,15 @@ export default function WorkspacePanel() {
 
       {/* Footer */}
       <div className="pt-4 mt-auto border-t border-surface-border flex items-center justify-between">
-        <span className="text-xs text-ink-600">
-          {new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
-        </span>
+        <button
+          onClick={() => setShowCreateMeetingModal(true)}
+          className="text-xs text-ink-500 hover:text-ink-300 transition-colors flex items-center gap-1.5"
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M5 2H2a1 1 0 00-1 1v6a1 1 0 001 1h3M8 8l3-3-3-3M11 5H5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          Create Meeting
+        </button>
         <button
           onClick={logoutEmployee}
           className="text-xs text-ink-500 hover:text-ink-300 transition-colors flex items-center gap-1.5"

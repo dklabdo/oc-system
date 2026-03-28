@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "ocestral erp",
+  "productName": "oc team",
   "version": "0.1.0",
   "identifier": "benhadou.erp",
   "plugins": {
@@ -26,7 +26,7 @@
       }
     ],
     "security": {
-      "csp": "default-src 'self'; connect-src 'self' https://erp.benhadou.ocestral.com; frame-src https://erp.benhadou.ocestral.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline';",
+      "csp": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' http: https:; connect-src 'self' http: https: wss: ws: https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.firebaseapp.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com; frame-src 'self' http: https: https://*.firebaseapp.com; img-src 'self' data: http: https:; style-src 'self' 'unsafe-inline' http: https:; font-src 'self' data: http: https:;",
 
       "capabilities": ["main-capability"]
     }

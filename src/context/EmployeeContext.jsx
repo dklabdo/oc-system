@@ -13,6 +13,7 @@ export function EmployeeProvider({ children }) {
   const [apps, setApps] = useState([]);
   const [loadingEmployee, setLoadingEmployee] = useState(true);
   const [sessionId, setSessionId] = useState(null);
+  const [showCreateMeetingModal, setShowCreateMeetingModal] = useState(false);
 
   // On mount, try to restore from localStorage
   useEffect(() => {
@@ -24,7 +25,9 @@ export function EmployeeProvider({ children }) {
         setEmployee(parsed);
         if (storedSession) setSessionId(storedSession);
         // Refresh apps
-        getAppsForEmployee(parsed).then(setApps).catch(() => {});
+        getAppsForEmployee(parsed)
+          .then(setApps)
+          .catch(() => {});
       } catch {}
     }
     setLoadingEmployee(false);
@@ -68,7 +71,7 @@ export function EmployeeProvider({ children }) {
 
   return (
     <EmployeeContext.Provider
-      value={{ employee, apps, loadingEmployee, loginEmployee, logoutEmployee }}
+      value={{showCreateMeetingModal, setShowCreateMeetingModal , employee, apps, loadingEmployee, loginEmployee, logoutEmployee }}
     >
       {children}
     </EmployeeContext.Provider>

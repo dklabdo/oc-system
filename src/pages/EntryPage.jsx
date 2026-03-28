@@ -7,13 +7,14 @@ import WorkspacePanel from "../components/WorkspacePanel";
 import { useEmployee } from "../context/EmployeeContext";
 import { useTheme } from "../context/ThemeProvider";
 import { Link } from "react-router-dom";
+import CreateMeetingModal from "@/components/CreateMeetingModal";
 
 const COMPANY_NAME = import.meta.env.VITE_COMPANY_NAME || "NexaWork";
 const COMPANY_TAGLINE =
   import.meta.env.VITE_COMPANY_TAGLINE || "Where great teams build the future";
 
 export default function EntryPage() {
-  const { employee, loadingEmployee } = useEmployee();
+  const { employee, loadingEmployee , showCreateMeetingModal } = useEmployee();
   const { theme, toggleTheme } = useTheme();
   const [showModal, setShowModal] = useState(false);
   const [workspaceActive, setWorkspaceActive] = useState(false);
@@ -38,6 +39,8 @@ export default function EntryPage() {
 
   return (
     <div className="min-h-screen bg-surface flex flex-col lg:flex-row noise">
+                {showCreateMeetingModal && <CreateMeetingModal />}
+
       {/* ── LEFT PANEL ─────────────────────────────────── */}
       <div className="w-full lg:w-[60%] lg:min-w-[420px] flex flex-col min-h-screen lg:h-screen overflow-y-auto">
         <div className="flex flex-col flex-1 px-8 sm:px-12 py-10">
