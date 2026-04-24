@@ -134,8 +134,10 @@ function AppCard({ app, index }) {
   };
 
   return (
-    <button
-      onClick={handleClick}
+    <a
+      href={app.appLink}
+      target="_blank"
+      
       className={` app-icon-card relative flex flex-col items-center gap-3 p-4 rounded-2xl
         bg-gradient-to-br ${color} border
         cursor-pointer group text-center`}
@@ -152,7 +154,7 @@ function AppCard({ app, index }) {
           <path d="M2 8L8 2M8 2H4M8 2v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
         </svg>
       </div>
-    </button>
+    </a>
   );
 }
 
@@ -207,24 +209,26 @@ export default function WorkspacePanel() {
       )}
 
       {/* Footer */}
-      <div className="pt-4 mt-auto border-t border-surface-border flex items-center justify-between">
+      <div className="pt-6 mt-auto border-t border-surface-border flex items-center justify-between">
         <button
           onClick={() => setShowCreateMeetingModal(true)}
-          className="text-xs text-ink-500 hover:text-ink-300 transition-colors flex items-center gap-1.5"
+          className="text-xs scale-95 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1.5"
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M5 2H2a1 1 0 00-1 1v6a1 1 0 001 1h3M8 8l3-3-3-3M11 5H5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           Create Meeting
         </button>
+
+        
         <button
           onClick={logoutEmployee}
-          className="text-xs text-ink-500 hover:text-ink-300 transition-colors flex items-center gap-1.5"
+          className="text-xs bg-red-600 text-white py-2 px-3 rounded-lg hover:bg-red-700 transition-colors flex items-center gap-1.5"
         >
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
             <path d="M5 2H2a1 1 0 00-1 1v6a1 1 0 001 1h3M8 8l3-3-3-3M11 5H5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-          Sign out
+          
         </button>
       </div>
     </div>

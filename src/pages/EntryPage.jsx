@@ -9,7 +9,7 @@ import { useTheme } from "../context/ThemeProvider";
 import { Link } from "react-router-dom";
 import CreateMeetingModal from "@/components/CreateMeetingModal";
 
-const COMPANY_NAME = import.meta.env.VITE_COMPANY_NAME || "NexaWork";
+const COMPANY_NAME = import.meta.env.VITE_COMPANY_NAME || "OCESTRAL";
 const COMPANY_TAGLINE =
   import.meta.env.VITE_COMPANY_TAGLINE || "Where great teams build the future";
 
