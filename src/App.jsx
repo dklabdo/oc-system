@@ -13,6 +13,7 @@ import DashboardLogin from "./pages/DashboardLogin";
 import EmployeesPage from "./pages/EmployeesPage";
 import RolesPage from "./pages/RolesPage";
 import SessionsPage from "./pages/SessionsPage";
+import InvoicesPage from "./pages/InvoicesPage";
 import ThemeProvider from "./context/ThemeProvider";
 
 export default function App() {
@@ -62,6 +63,7 @@ export default function App() {
               <Route path="employees" element={<EmployeesPage />} />
               <Route path="roles" element={<RolesPage />} />
               <Route path="sessions" element={<SessionsPage />} />
+              <Route path="invoices" element={<InvoicesPage />} />
               {/* Default redirect inside dashboard */}
               <Route index element={<Navigate to="employees" replace />} />
             </Route>

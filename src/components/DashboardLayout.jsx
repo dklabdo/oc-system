@@ -4,6 +4,7 @@ import { NavLink, useNavigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeProvider";
 import toast from "react-hot-toast";
+import { ReceiptText } from "lucide-react";
 
 const NAV = [
   {
@@ -97,6 +98,11 @@ const NAV = [
         />
       </svg>
     ),
+  },
+  {
+    to: "/dashboard/invoices",
+    label: "Factures",
+    icon: <ReceiptText size={16} strokeWidth={1.7} />,
   },
 ];
 
